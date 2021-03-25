@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.15)
+project(SMMLF)
+
+set(CMAKE_CXX_STANDARD 14)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+
+set(MALICIOUS_LIB malicious_lib/reed_solomn_reconstruct.h malicious_lib/reed_solomn_reconstruct.cpp malicious_lib/feldman_vss.cpp malicious_lib/feldman_vss.h)
+set(SOURCE_FILES_BASE Constant.cpp Constant.h util/SocketOnline.cpp util/SocketOnline.h util/SocketManager.cpp util/SocketManager.h Mat.cpp Mat.h Player.cpp Player.h Op.cpp Op.h NeuronMat.cpp NeuronMat.h machine_learning/NN.cpp machine_learning/NN.h machine_learning/BPGraph.cpp machine_learning/BPGraph.h MathOp.cpp MathOp.h util/IOManager.cpp util/IOManager.h)
+
+#add_executable(reed malicious_lib/reed_solomn_reconstruct.cpp malicious_lib/reed_solomn_reconstruct.h Constant.h Constant.cpp malicious_lib/feldman_vss.h malicious_lib/feldman_vss.cpp)
+#add_executable(feldman malicious_lib/feldman_vss.cpp malicious_lib/feldman_vss.h)
+
+add_executable(SMMLF main.cpp Constant.cpp Constant.h util/SocketOnline.cpp util/SocketOnline.h util/SocketManager.cpp util/SocketManager.h Mat.cpp Mat.h Player.cpp Player.h Op.cpp Op.h NeuronMat.cpp NeuronMat.h machine_learning/NN.cpp machine_learning/NN.h machine_learning/BPGraph.cpp machine_learning/BPGraph.h MathOp.cpp MathOp.h util/IOManager.cpp util/IOManager.h ${MALICIOUS_LIB} LSTMGraph.cpp Cell.cpp)
+#target_link_libraries(SMMLF ws2_32)
