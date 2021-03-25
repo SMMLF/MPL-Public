@@ -4,7 +4,6 @@ CMakeFiles/
 Makefile
 SMMLF
 cmake_install.cmake
-mnist/
 output/
 cmake-build-debug/
 *.count

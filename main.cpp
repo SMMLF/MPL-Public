@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "util/IOManager.h"
 #include "machine_learning/BPGraph.h"
-#include "LSTMGraph.h"
+#include "machine_learning/LSTMGraph.h"
 
 int node_type;
 SocketManager::SMMLF tel;
@@ -27,11 +27,11 @@ int main(int argc, char** argv) {
     tel.init();
 
     /** LSTM **/
-//    LSTMGraph::LSTM *lstm = new LSTMGraph::LSTM(&IOManager::train_data, &IOManager::train_label, &IOManager::test_data, &IOManager::test_label);
-//    DBGprint("LSTM constructing ...\n");
-//    lstm->graph();
-//    DBGprint("LSTM constructed ...\n");
-//    lstm->train();
+    // LSTMGraph::LSTM *lstm = new LSTMGraph::LSTM(&IOManager::train_data, &IOManager::train_label, &IOManager::test_data, &IOManager::test_label);
+    // DBGprint("LSTM constructing ...\n");
+    // lstm->graph();
+    // DBGprint("LSTM constructed ...\n");
+    // lstm->train();
 
     /** NN, Linear Regression, Logistic Regression **/
     BPGraph::LR *bp = new BPGraph::LR(&IOManager::train_data, &IOManager::train_label, &IOManager::test_data, &IOManager::test_label);
