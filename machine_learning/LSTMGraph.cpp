@@ -103,22 +103,17 @@ void LSTMGraph::LSTM::train() {
             while (nn->forwardHasNext()) {
                 nn->forwardNext();
             }
-            print_perd(-1);
             DBGprint("backwarding ...\n",i);
-            //DBGtest=1;
             while (nn->backHasNext()) {
                 nn->backNext();
 
             }
-            print_perd(-2);
             DBGprint("updating ...\n",i);
             while (nn->updateHasNext()) {
                 nn->update();
 
             }
-            print_perd(-3);
             nn->gradUpdate();
-            print_perd(-4);
             // cout<<"w_f:"<<endl;
             // nn->getNeuron(cells[0]->getW_f())->getForward()->print();
             // cout<<"w_c:"<<endl;
@@ -126,14 +121,6 @@ void LSTMGraph::LSTM::train() {
             // cout<<"w_i:"<<endl;
             // nn->getNeuron(cells[0]->getW_i())->getForward()->print();
             // cout<<"w_o:"<<endl;
-            // nn->getNeuron(cells[0]->getW_o())->getForward()->print();
-            nn->getNeuron(st_mul)->getForward()->print();
-            nn->getNeuron(out_sig)->getForward()->print();
-            nn->getNeuron(output)->getForward()->print();
-
-            cout <<"grad\n";
-            nn->getNeuron(out_sig)->getGrad()->print();
-            nn->getNeuron(st_mul)->getGrad()->print();
         }
         if ((i+1)%PRINT_PRE_ITE == 0) {
             DBGprint("testing ...\n",i);
@@ -153,8 +140,8 @@ void LSTMGraph::LSTM::test() {
     out_file.open("accuracy_lstm.txt", ios::app);
     for (int i = 0; i < NM / B; i++) {
         globalRound++;
-        next_batch(x_batch, i * B, test_data);
-        next_batch(y_batch, i * B, test_label);
+        next_batch(x_batch, i * B, train_data);
+        next_batch(y_batch, i * B, train_label);
         feed(nn, x_batch, y_batch, x, output);
         nn->epoch_init();
         DBGprint("forwarding ...\n",i);

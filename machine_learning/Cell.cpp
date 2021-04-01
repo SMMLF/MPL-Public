@@ -68,8 +68,8 @@ void Cell::addEdges() {
 
     nn->addOpSigmoid(sig_f,st_f);
     nn->addOpSigmoid(sig_i,st_i);
-    // nn->addOpTanh(tanh_cc,st_c);
-    nn->addOpRaw_Tanh(tanh_cc,st_c);
+    // nn->addOpRaw_Tanh(tanh_cc,st_c);
+    nn->addOpHybrid_Tanh(tanh_cc,st_c);
     nn->addOpSigmoid(sig_o,st_o);
 
 
@@ -79,8 +79,8 @@ void Cell::addEdges() {
 
 
     nn->addOpAdd_Mat(c_out,mul_f,mul_i);
-    // nn->addOpTanh(tanh_c,c_out);
-    nn->addOpRaw_Tanh(tanh_c,c_out);
+    // nn->addOpRaw_Tanh(tanh_c,c_out);
+    nn->addOpHybrid_Tanh(tanh_c,c_out);
     nn->addOpHada_Mat(h_out,tanh_c,sig_o);
 }
 

@@ -607,10 +607,10 @@ void MathOp::Div2mP::forward() {
 //            }
 //            r->clear();
 //            b->clear();
-            pRandM->forward();
-            if (pRandM->forwardHasNext()) {
-                forwardRound--;
-            }
+            // pRandM->forward();
+            // if (pRandM->forwardHasNext()) {
+            //     forwardRound--;
+            // }
             break;
         case 3:
             *r = *r_nd * (1ll << m) + *r_st;
@@ -1451,7 +1451,7 @@ MathOp::LTZ::LTZ(Mat *res, Mat *a, int k) {
 //    tmp2 = new Mat(res->rows(), res->cols());
 //    tmp3 = new Mat(res->rows(), res->cols());
     pDiv2m = new Div2m(res, a, k, k-1);
-//    reveal = new Reveal(res, a);
+   reveal = new Reveal(res, a);
 //    reveal_tmp = new Reveal(tmp2, tmp1);
 //    reveal_a = new Reveal(tmp3, a);
     init(2, 0);
@@ -1460,27 +1460,27 @@ MathOp::LTZ::LTZ(Mat *res, Mat *a, int k) {
 void MathOp::LTZ::forward() {
     reinit();
     switch (forwardRound) {
-    //    case 1:
-    //        reveal->forward();
-    //        if (reveal->forwardHasNext()) {
-    //            forwardRound--;
-    //        }
-    //        break;
-    //    case 2:
-    //        *res = res->LTZ();
-    //        break;
-        case 1:
-            pDiv2m->forward();
-            if (pDiv2m->forwardHasNext()) {
-                forwardRound--;
-            }
-            break;
-        case 2:
-            *res = res->opposite() * IE;
-//            *tmp1 = tmp1->opposite() * IE;
-//            *res = res->oneMinus_IE();
-//            *res = res->LTZ();
-            break;
+       case 1:
+           reveal->forward();
+           if (reveal->forwardHasNext()) {
+               forwardRound--;
+           }
+           break;
+       case 2:
+           *res = res->LTZ();
+           break;
+//         case 1:
+//             pDiv2m->forward();
+//             if (pDiv2m->forwardHasNext()) {
+//                 forwardRound--;
+//             }
+//             break;
+//         case 2:
+//             *res = res->opposite() * IE;
+// //            *tmp1 = tmp1->opposite() * IE;
+// //            *res = res->oneMinus_IE();
+// //            *res = res->LTZ();
+//             break;
 //        case 3:
 //            reveal->forward();
 //            if (reveal->forwardHasNext()) {
@@ -2379,14 +2379,10 @@ MathOp::Tanh_Mat::Tanh_Mat(NeuronMat *res, NeuronMat *a){
     tmp_c = a->cols();
     res->setAux(new Mat(tmp_r, tmp_c));
     u_st = new Mat(tmp_r, tmp_c);
-    u_st_res = new Mat(tmp_r, tmp_c);
     u_nd = new Mat(tmp_r, tmp_c);
-    u_nd_res = new Mat(tmp_r, tmp_c);
-    reveal = new Reveal(u_nd_res, u_nd);
     u_rd = new Mat(tmp_r, tmp_c);
-    u_rd_res = new Mat(tmp_r, tmp_c);
-    pLTZ_f_1 = new LTZ(u_st_res, u_st, BIT_P_LEN);
-    pLTZ_f_2 = new LTZ(u_rd_res, u_rd, BIT_P_LEN);
+    pLTZ_f_1 = new LTZ(u_st, u_st, BIT_P_LEN);
+    pLTZ_f_2 = new LTZ(u_rd, u_rd, BIT_P_LEN);
     init(9,4);
 }
 
@@ -2394,8 +2390,7 @@ void MathOp::Tanh_Mat::forward(){
     reinit();
     switch (forwardRound) {
         case 1:
-//            *res->getForward() = *a_r * coefficients[0] / IE;
-            *res->getForward() = *a_r * coefficients[0] * Constant::Util::inverse(IE, MOD);
+            *res->getForward() = *a_r * coefficients[0] / IE;
             break;
         case 2:
             *res->getForward() = res->getForward()->dot(*a_r);
@@ -2427,29 +2422,15 @@ void MathOp::Tanh_Mat::forward(){
             }
             break;
         case 8:
-            *u_rd_res = u_rd_res->oneMinus_IE();
-            *u_nd = (*u_rd_res+*u_st_res).oneMinus_IE();
-            *res->getForward() = res->getForward()->dot(*u_nd)+*u_rd_res*IE-*u_st_res*IE;
-//            *res->getForward() = res->getForward()->dot(*u_nd);
+            *u_rd = u_rd->oneMinus_IE();
+            *u_nd = (*u_rd+*u_st).oneMinus_IE();
+            *res->getForward() = res->getForward()->dot(*u_nd)+*u_rd*(IE-IE_b)-*u_st*(IE-IE_b);
             break;
-//        case 9:
-//            reveal->forward();
-//            if (reveal->forwardHasNext()) {
-//                forwardRound--;
-//            }
-//            break;
         case 9:
             div2mP_f3->forward();
             if (div2mP_f3->forwardHasNext()) {
                 forwardRound--;
             }
-            break;
-//        case 10:
-//            u_nd_res->print();
-//            *res->getForward() = res->getForward()->dot(*u_nd_res);
-//            break;
-        case 10:
-            *res->getForward() = *res->getForward() + *u_rd_res-*u_st_res;
             break;
     }
 }
@@ -2487,6 +2468,7 @@ void MathOp::Tanh_Mat::back(){
         }
             break;
     }
+
 }
 
 MathOp::Raw_Tanh::Raw_Tanh() {}
@@ -2521,8 +2503,7 @@ MathOp::Tanh_change::Tanh_change(NeuronMat *res, NeuronMat *a) {
 
 void MathOp::Tanh_change::forward() {
     reinit();
-//    *res->getForward()=(*a->getForward()+IE) / 2;
-    *res->getForward()=(*a->getForward()+IE)* Constant::Util::inverse(2, MOD);
+    *res->getForward()=(*a->getForward()+IE)/2;
 }
 
 void MathOp::Tanh_change::back() {
