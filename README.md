@@ -15,6 +15,8 @@ There are two practical situations as follow:
 
 ## Repository Structure
 
+* `core/`: Core libaries in MPL. The fundamental matrix lib, math operator lib and Player lib.
+
 * `machine_learning/`: Machine learning algorithms: neural networks, linear regression and logistic regression.
 
 * `malicious_lib/`: The malicious setting.
