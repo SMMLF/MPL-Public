@@ -7,11 +7,11 @@
 
 #include "Op.h"
 #include "NeuronMat.h"
-#include "util/SocketOnline.h"
+#include "../util/SocketOnline.h"
 #include "Player.h"
-#include "malicious_lib/reed_solomn_reconstruct.h"
-#include "util/IOManager.h"
-#include "Constant.h"
+#include "../malicious_lib/reed_solomn_reconstruct.h"
+#include "../util/IOManager.h"
+#include "../Constant.h"
 
 extern int node_type;
 extern SocketOnline *socket_io[M][M];

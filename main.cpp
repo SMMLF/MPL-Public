@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "util/SocketManager.h"
-#include "Player.h"
+#include "core/Player.h"
 #include "util/IOManager.h"
 #include "machine_learning/BPGraph.h"
 #include "machine_learning/LSTMGraph.h"

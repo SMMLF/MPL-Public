@@ -5,7 +5,7 @@
 #ifndef MPC_ML_IOMANAGER_H
 #define MPC_ML_IOMANAGER_H
 #include <cassert>
-#include "../Mat.h"
+#include "../core/Mat.h"
 #include "../Constant.h"
 extern int node_type;
 class IOManager {

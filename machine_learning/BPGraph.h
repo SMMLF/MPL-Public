@@ -7,7 +7,7 @@
 
 #include "../Constant.h"
 #include "NN.h"
-#include "../Player.h"
+#include "../core/Player.h"
 
 extern int node_type;
 

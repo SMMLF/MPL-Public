@@ -6,8 +6,8 @@
 #define SMMLF_CELL_H
 
 #include "../Constant.h"
-#include "../machine_learning/NN.h"
-#include "../Player.h"
+#include "NN.h"
+#include "../core/Player.h"
 
 class Cell {
     NN* nn;

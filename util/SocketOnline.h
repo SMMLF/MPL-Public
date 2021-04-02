@@ -6,7 +6,7 @@
 #define MPC_ML_SOCKETONLINE_H
 
 #include "../Constant.h"
-#include "../Mat.h"
+#include "../core/Mat.h"
 
 #ifdef UNIX_PLATFORM
 typedef int SOCK;

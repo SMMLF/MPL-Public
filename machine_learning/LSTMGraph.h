@@ -6,8 +6,8 @@
 #define SMMLF_LSTMGRAPH_H
 
 #include "../Constant.h"
-#include "../machine_learning/NN.h"
-#include "../Player.h"
+#include "NN.h"
+#include "../core/Player.h"
 #include "Cell.h"
 
 extern int node_type;

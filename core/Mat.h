@@ -5,7 +5,7 @@
 #ifndef MPC_ML_MAT_H
 #define MPC_ML_MAT_H
 
-#include "Constant.h"
+#include "../Constant.h"
 
 class Mat {
     int r, c;

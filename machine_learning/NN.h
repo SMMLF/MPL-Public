@@ -6,8 +6,8 @@
 #define MPC_ML_NN_H
 
 #include "../Constant.h"
-#include "../NeuronMat.h"
-#include "../MathOp.h"
+#include "../core/NeuronMat.h"
+#include "../core/MathOp.h"
 
 class NN {
     vector<vector<int> > adj;
